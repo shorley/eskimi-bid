@@ -7,6 +7,7 @@ import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
 import com.eskimi.domain._
+import com.eskimi.samplebid.TestSender.logger
 import com.eskimi.samplebid.routes.BidRoutes
 import de.heikoseeberger.akkahttpjackson.JacksonSupport
 import org.slf4j.LoggerFactory
@@ -17,6 +18,8 @@ import scala.io.StdIn
 import scala.util.Random
 
 object EskimiBid extends JacksonSupport {
+
+  val logger = LoggerFactory.getLogger(this.getClass)
 
   def constantCampaigns(): Seq[Campaign] = {
     Seq[Campaign](
@@ -106,7 +109,7 @@ object EskimiBid extends JacksonSupport {
       }
 
     if (resolved_responses.nonEmpty) {
-      resolved_responses.zipWithIndex.foreach { case (bid, c) => println(s"$c: $bid") }
+      resolved_responses.zipWithIndex.foreach { case (bid, c) => logger.info(s"$c: $bid") }
       val _rand = random.nextInt(resolved_responses.length)
       Some(resolved_responses(_rand))
     } else {
@@ -130,19 +133,17 @@ object EskimiBid extends JacksonSupport {
         case MissingQueryParamRejection(param) =>
           complete(BadRequest, s"Missing query Param error. $param")
         case a @ _ =>
-          println(s"some errors occurred here : $a")
+          logger.info(s"some errors occurred here : $a")
           complete(BadRequest, s"Other error. $a")
       }
       .result()
 
-  val logger = LoggerFactory.getLogger(this.getClass)
-
   def main(args: Array[String]): Unit = {
-    campaigns.zipWithIndex.foreach { case (cam, c) => println(s"${c + 1}: $cam") }
+    campaigns.zipWithIndex.foreach { case (cam, c) => logger.info(s"${c + 1}: $cam") }
     val route      = new BidRoutes().route
     val httpserver = Http().newServerAt("localhost", 8088).bind(route)
 
-    println(s"Server now online. Please send request to http://localhost:8088/api/bid\nPress RETURN to stop...")
+    logger.info(s"Server now online. Please send request to http://localhost:8088/api/bid\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
     httpserver
       .flatMap(_.unbind())                 // trigger unbinding from the port

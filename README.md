@@ -34,6 +34,10 @@ Trying to move classes that maybe (just maybe) seems to be part of the domain.
 
 New class with routes is `BidRoutes.scala` in package `com.eskimi.samplebid.routes`.
 
+### (6) Don't use println
+
+Replaced all `println` for `logger.info`.
+
 ## Original description
 
 To start the server, simply run the EskimiBid main scala class.
