@@ -19,8 +19,6 @@ import scala.collection.mutable.ListBuffer
 import scala.io.StdIn
 import scala.util.Random
 
-case class Campaign(id: Int, country: String, targeting: Targeting, banners: List[Banner], bid: Double)
-case class Targeting(targetedSiteIds: Seq[String], startHourOfDay: Option[Int] = None, endHourOfDay: Option[Int] = None)
 case class Banner(id: Int, src: String, width: Int, height: Int)
 
 @JsonIgnoreProperties(ignoreUnknown = true) case class BidRequest(

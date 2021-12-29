@@ -5,7 +5,6 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 object TestSender {
   implicit val system = ActorSystem()

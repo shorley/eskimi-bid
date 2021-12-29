@@ -54,3 +54,7 @@ After that new task will be available, for example:
 ### .gitignore file (updated)
 
 Just an update to the file.
+
+### Package definition
+
+Your sources files `DataGenerator`, `EskimiBid` and `TestSender` are defined in package `com.eskimi.samplebid` but the path in the project is wrong.
