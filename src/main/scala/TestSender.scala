@@ -18,15 +18,17 @@ object TestSender {
   val constantBidrequest = HttpRequest(
     method = HttpMethods.POST,
     uri = "http://localhost:8088/api/bid",
-    entity = HttpEntity(ContentTypes.`application/json`, s"$constantsource")
+    entity = HttpEntity(ContentTypes.`application/json`, s"$constantsource"),
   )
 
   implicit val bidRequest = DataGenerator.samplebid(1, None, 2.5, 3.5)
 
-  def request(implicit bidRequest: BidRequest) = HttpRequest(
-    method = HttpMethods.POST,
-    uri = "http://localhost:8088/api/bid",
-    entity = HttpEntity(ContentTypes.`application/json`, s"${BidRequest.toJson(bidRequest)}"))  //s"${BidRequest.toJson(bidRequest)}"
+  def request(implicit bidRequest: BidRequest) =
+    HttpRequest(
+      method = HttpMethods.POST,
+      uri = "http://localhost:8088/api/bid",
+      entity = HttpEntity(ContentTypes.`application/json`, s"${BidRequest.toJson(bidRequest)}"),
+    ) //s"${BidRequest.toJson(bidRequest)}"
 
   def sendRequest() = {
     println(s"Generated Bid: ${BidRequest.toJson(bidRequest)}")
@@ -36,7 +38,7 @@ object TestSender {
       case empty @ HttpResponse(StatusCodes.NoContent, _, _, _) =>
         empty.discardEntityBytes()
         Future("No Content received!")
-      case all@ _ =>
+      case all @ _ =>
         all.discardEntityBytes()
         Future(s"Something went wrong!!: status code: ${all.status}, message: ${all.toString()}")
     }

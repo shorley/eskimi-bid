@@ -36,3 +36,17 @@ Customization is done by changing parameters in method call:
     implicit val bidRequest = DataGenerator.samplebid
 
 Once the campaign is started, you may choose to run the Bid client multiple times to see the effect of passing different sample Bid requests and the server responses to matches.
+
+## Changes after fork
+
+Original project: https://github.com/shorley/eskimi-bid
+
+### scalaFmt
+
+One of the things I always do when I start a project is add some plugin to the project for code style. 
+I will add scalafmt: https://scalameta.org/scalafmt/.
+After that new task will be available, for example:
+
+- scalafmtCheck
+- scalafmt
+- scalafmtAll
