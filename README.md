@@ -50,3 +50,7 @@ After that new task will be available, for example:
 - scalafmtCheck
 - scalafmt
 - scalafmtAll
+
+### .gitignore file (updated)
+
+Just an update to the file.
