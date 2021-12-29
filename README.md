@@ -30,6 +30,9 @@ Your sources files `DataGenerator`, `EskimiBid` and `TestSender` are defined in 
 
 Trying to move classes that maybe (just maybe) seems to be part of the domain.
 
+### (5) More cleaning in main class, moving routes to a different package.
+
+New class with routes is `BidRoutes.scala` in package `com.eskimi.samplebid.routes`.
 
 ## Original description
 

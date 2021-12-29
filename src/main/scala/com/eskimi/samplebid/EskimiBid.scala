@@ -4,10 +4,10 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes._
-import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server._
 import com.eskimi.domain._
+import com.eskimi.samplebid.routes.BidRoutes
 import de.heikoseeberger.akkahttpjackson.JacksonSupport
 import org.slf4j.LoggerFactory
 
@@ -118,18 +118,6 @@ object EskimiBid extends JacksonSupport {
   implicit val executionContext = system.executionContext
   implicit val campaigns        = DataGenerator.samplecampaigns(5, None, 3.0, 5.5, Some(6), None)
 
-  val route: Route = (path("api" / "bid") & post) {
-    entity(as[BidRequest]) { bid =>
-      println(s">>>>>>>>>>>>>>>> ----------------------------------------------------<<<<<<<<<<<<<<")
-      val response: Option[BidResponse] = validateBid(bid)
-      println(s">>>>>>>>> response: $response")
-      response match {
-        case Some(b) => complete(b)
-        case None    => complete(StatusCodes.NoContent)
-      }
-    }
-  }
-
   implicit def myRejectionHandler =
     RejectionHandler
       .newBuilder()
@@ -151,6 +139,7 @@ object EskimiBid extends JacksonSupport {
 
   def main(args: Array[String]): Unit = {
     campaigns.zipWithIndex.foreach { case (cam, c) => println(s"${c + 1}: $cam") }
+    val route      = new BidRoutes().route
     val httpserver = Http().newServerAt("localhost", 8088).bind(route)
 
     println(s"Server now online. Please send request to http://localhost:8088/api/bid\nPress RETURN to stop...")
