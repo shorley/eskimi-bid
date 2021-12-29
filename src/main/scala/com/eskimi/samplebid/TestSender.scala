@@ -3,8 +3,10 @@ package com.eskimi.samplebid
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
+import com.eskimi.domain.BidRequest
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 object TestSender {
   implicit val system = ActorSystem()

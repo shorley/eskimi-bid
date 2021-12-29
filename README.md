@@ -1,5 +1,38 @@
 ## Bid Server
 
+## Changes after fork
+
+Original project: https://github.com/shorley/eskimi-bid
+
+### (1) scalaFmt
+
+One of the things I always do when I start a project is add some plugin to the project for code style.
+I will add scalafmt: https://scalameta.org/scalafmt/.
+After that new task will be available, for example:
+
+- scalafmtCheck
+- scalafmt
+- scalafmtAll
+
+Also in order to be able to build the project I had to comment this line build.sbt:
+
+`idePackagePrefix := Some("com.eskimi.samplebid")`
+
+### (2) .gitignore file (updated)
+
+Just an update to the file.
+
+### (3) Package definition
+
+Your sources files `DataGenerator`, `EskimiBid` and `TestSender` are defined in package `com.eskimi.samplebid` but the path in the project is wrong.
+
+### (4) Cleaning main class: moving case classes to a domain package
+
+Trying to move classes that maybe (just maybe) seems to be part of the domain.
+
+
+## Original description
+
 To start the server, simply run the EskimiBid main scala class.
 
 This will start the server process on http://localhost:8088/api/bid
@@ -37,24 +70,3 @@ Customization is done by changing parameters in method call:
 
 Once the campaign is started, you may choose to run the Bid client multiple times to see the effect of passing different sample Bid requests and the server responses to matches.
 
-## Changes after fork
-
-Original project: https://github.com/shorley/eskimi-bid
-
-### scalaFmt
-
-One of the things I always do when I start a project is add some plugin to the project for code style. 
-I will add scalafmt: https://scalameta.org/scalafmt/.
-After that new task will be available, for example:
-
-- scalafmtCheck
-- scalafmt
-- scalafmtAll
-
-### .gitignore file (updated)
-
-Just an update to the file.
-
-### Package definition
-
-Your sources files `DataGenerator`, `EskimiBid` and `TestSender` are defined in package `com.eskimi.samplebid` but the path in the project is wrong.
